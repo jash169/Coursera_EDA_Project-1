@@ -1,0 +1,17 @@
+> library(dplyr)
+> library(lubridate)
+> mydata <- read.csv("household_power_consumption.txt", sep = ";", header = TRUE, na.string = "?")
+> mydata <- mydata %>% mutate(Date=as.Date(Date,format="%d/%m/%Y"))
+> d1 <- as.Date("2007-02-01")
+> d2 <- as.Date("2007-02-02")
+> mydata <- mydata %>% filter(between(Date,d1,d2))
+> dim(mydata)
+[1] 2880    9
+> mydata$newdate = ymd_hms(paste(mydata$Date,mydata$Time))
+> plot(mydata$Global_active_power~mydata$newdate, lty = 1, type = "o", pch = ".", xlab = "", ylab = "Global Active Power (kilowatts)")
+> dev.copy(png, "plot2.png")
+png 
+  3 
+> dev.off()
+windows 
+      2 
